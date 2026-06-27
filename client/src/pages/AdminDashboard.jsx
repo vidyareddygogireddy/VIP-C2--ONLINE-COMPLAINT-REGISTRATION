@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 function AdminDashboard() {
   const [complaints, setComplaints] = useState([]);
@@ -15,7 +15,7 @@ function AdminDashboard() {
 
   const fetchAllComplaints = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/complaints', {
+      const response = await api.get('/complaints', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(response.data);
@@ -26,7 +26,7 @@ function AdminDashboard() {
 
   const fetchAgents = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/agents', {
+      const response = await api.get('/auth/agents', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAgents(response.data);
@@ -37,8 +37,8 @@ function AdminDashboard() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(
-        `http://localhost:5000/api/complaints/${id}/status`,
+      await api.put(
+        `/complaints/${id}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -51,8 +51,8 @@ function AdminDashboard() {
   const handleAgentChange = async (complaintId, agentId) => {
     if (!agentId) return;
     try {
-      await axios.put(
-        `http://localhost:5000/api/complaints/${complaintId}/assign`,
+      await api.put(
+        `/complaints/${complaintId}/assign`,
         { agentId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -66,7 +66,7 @@ function AdminDashboard() {
   const handleDeleteComplaint = async (id) => {
     if (window.confirm('Are you sure you want to delete this complaint?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/complaints/${id}`, {
+        await api.delete(`/complaints/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         fetchAllComplaints();

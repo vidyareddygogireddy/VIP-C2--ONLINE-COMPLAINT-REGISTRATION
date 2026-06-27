@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 function AgentDashboard() {
   const [complaints, setComplaints] = useState([]);
@@ -24,7 +24,7 @@ function AgentDashboard() {
 
   const fetchAssignedComplaints = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/complaints', {
+      const response = await api.get('/complaints', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -40,8 +40,8 @@ function AgentDashboard() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(
-        `http://localhost:5000/api/complaints/${id}/status`,
+      await api.put(
+        `/complaints/${id}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );

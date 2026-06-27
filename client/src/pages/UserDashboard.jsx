@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import ComplaintForm from '../components/ComplaintForm';
 import ComplaintList from '../components/ComplaintList';
 
@@ -16,7 +16,7 @@ function UserDashboard() {
 
   const fetchMyComplaints = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/complaints/my', {
+      const response = await api.get('/complaints/my', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(response.data);
@@ -30,8 +30,8 @@ function UserDashboard() {
     setSuccess('');
 
     try {
-      await axios.post(
-        'http://localhost:5000/api/complaints',
+      await api.post(
+        '/complaints',
         complaintData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -45,7 +45,7 @@ function UserDashboard() {
   const handleDeleteComplaint = async (id) => {
     if (window.confirm('Are you sure you want to delete this complaint?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/complaints/${id}`, {
+        await api.delete(`/complaints/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         fetchMyComplaints();

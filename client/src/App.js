@@ -7,6 +7,8 @@ import Register from './pages/Register';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AgentDashboard from './pages/AgentDashboard';
+import ComplaintDetails from './pages/ComplaintDetails';
+import Feedback from './pages/Feedback';
 
 function App() {
   const isAuthenticated = () => {
@@ -49,6 +51,8 @@ function App() {
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/agent-dashboard" element={<AgentDashboard />} />
+          <Route path="/complaint/:id" element={<ComplaintDetails />} />
+          <Route path="/feedback/:id" element={<Feedback />} />
         </Routes>
       </div>
     </Router>
